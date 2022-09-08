@@ -1,11 +1,17 @@
 import { useDispatch } from 'react-redux';
 import { decrease, increase } from '../../redux/product/productSlice';
 
-function ProductItem({ id, title, price, image, amount }) {
+import { useContext } from 'react';
+import { cartContext } from '../../context/cartContext';
+
+function ProductItem({product}) {
+  const { id, title, price, image, amount } = product;
+  const {addToCart} = useContext(cartContext);
   const dispatch = useDispatch();
 
   const increaseAmount = id => {
     dispatch(increase(id));
+    addToCart(product)
   };
 
   return (
@@ -28,7 +34,7 @@ function ProductItem({ id, title, price, image, amount }) {
           src='plus.png'
           alt=''
           className={!amount ? 'none' : ''}
-          onClick={() => dispatch(increase(id))}
+          onClick={() => increaseAmount(id)}
         />
       </div>
     </div>

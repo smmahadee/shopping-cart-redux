@@ -75,14 +75,14 @@ const productSlice = createSlice({
       state.productData = updatedProduct;
     },
   },
-  
+
   extraReducers: builder => {
     builder.addCase(fetchProduct.pending, state => {
       state.isLoading = true;
     });
     builder.addCase(fetchProduct.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.productData = action.payload.map(data => ({ ...data, amount: 0 }));
+      state.productData = action.payload.map(data => ({ ...data, amount: 0, price: Math.floor(data.price) }));
       state.error = '';
     });
     builder.addCase(fetchProduct.rejected, (state, action) => {

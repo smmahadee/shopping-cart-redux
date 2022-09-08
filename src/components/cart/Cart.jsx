@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import CartItem from './CartItem';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 function Cart() {
   const [isCartClosed, setIsCartClosed] = useState(true);
@@ -24,7 +24,7 @@ function Cart() {
         <div>
           {productData.map(product => {
             if (product.amount > 0) {
-              return <CartItem key={product.id} {...product} />;
+              return <CartItem key={product.id} product={product} />;
             }
             return '';
           })}
@@ -39,7 +39,7 @@ function Cart() {
           <button className='btn clear-btn'>Checkout</button>
         </footer>
       </section>
-      }
+
       <div
         className={`cart-button ${isCartClosed ? '' : 'none'}`}
         onClick={() => setIsCartClosed(false)}
