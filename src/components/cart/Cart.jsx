@@ -6,6 +6,7 @@ function Cart() {
   const [isCartClosed, setIsCartClosed] = useState(true);
   const { productData, amount, total } = useSelector(state => state.product);
 
+
   return (
     <div
       className={`cart-container ${isCartClosed ? 'cart-container-close' : ''}`}
@@ -29,6 +30,11 @@ function Cart() {
             return '';
           })}
         </div>
+        {/*  <div>
+          {cartItems.map(item => (
+            <CartItem key={item.id} product={item} />
+          ))}
+        </div>*/}
         <footer>
           <hr />
           <div className='cart-total'>

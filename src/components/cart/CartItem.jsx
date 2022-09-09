@@ -1,12 +1,9 @@
 import { useDispatch } from 'react-redux';
 import { decrease, increase, remove } from '../../redux/product/productSlice';
+import { useCartContext } from '../../context/cartContext';
 
-import { useContext } from 'react';
-import { cartContext } from '../../context/cartContext';
-
-
-function CartItem({product}) {
-  const {addToCart} = useContext(cartContext);
+function CartItem({ product }) {
+  const { addToCart } = useCartContext();
   const dispatch = useDispatch();
   const { image, title, price, amount, id } = product;
 
@@ -21,10 +18,13 @@ function CartItem({product}) {
         </button>
       </div>
       <div>
-        <button className='amount-btn' onClick={() => {
-          dispatch(increase(id))
-          addToCart(product)
-        }}>
+        <button
+          className='amount-btn'
+          onClick={() => {
+            dispatch(increase(id));
+            addToCart(product);
+          }}
+        >
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
             <path d='M10.707 7.05L10 6.343 4.343 12l1.414 1.414L10 9.172l4.243 4.242L15.657 12z'></path>
           </svg>

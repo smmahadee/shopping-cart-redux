@@ -42,7 +42,6 @@ const productSlice = createSlice({
       });
 
       state.productData = updatedProduct;
-      // state.productData[0].amount++;
     },
 
     getTotals: state => {
@@ -74,6 +73,22 @@ const productSlice = createSlice({
 
       state.productData = updatedProduct;
     },
+
+    updateProductData: (state, action) => {
+      const cartItems = action.payload;
+      const updatedData = state.productData.map(product => {
+        const newProduct =  cartItems.map(item => {
+          if (item.id === product.id) {
+            return { ...product, amount: item.amount };
+          }
+          return '';
+        });
+
+        return newProduct.find(p => p.id > 0);
+      });
+
+      console.log('updated data', updatedData)
+    },
   },
 
   extraReducers: builder => {
@@ -82,7 +97,11 @@ const productSlice = createSlice({
     });
     builder.addCase(fetchProduct.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.productData = action.payload.map(data => ({ ...data, amount: 0, price: Math.floor(data.price) }));
+      state.productData = action.payload.map(data => ({
+        ...data,
+        amount: 0,
+        price: Math.floor(data.price),
+      }));
       state.error = '';
     });
     builder.addCase(fetchProduct.rejected, (state, action) => {
@@ -94,4 +113,4 @@ const productSlice = createSlice({
 });
 
 export default productSlice.reducer;
-export const { increase, decrease, getTotals, remove } = productSlice.actions;
+export const { increase, decrease, getTotals, remove, updateProductData } = productSlice.actions;
